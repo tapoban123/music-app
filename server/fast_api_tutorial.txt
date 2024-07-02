@@ -1,0 +1,23 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+
+class UserCreate(BaseModel):
+    name: str
+    email: str
+    password: str
+
+@app.post("/")
+def test(user: UserCreate): # Here q is considered as a query parameter and t is considered body
+    print(user.name)
+    print(user.email)
+    print(user.password)
+    
+    pass
+
+
+
+Run the following command to run the api:
+fastapi dev main.py
