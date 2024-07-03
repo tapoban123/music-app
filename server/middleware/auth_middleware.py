@@ -1,5 +1,10 @@
-from fastapi import HTTPException, Header
+import os
 import jwt
+from dotenv import load_dotenv
+from fastapi import HTTPException, Header
+
+load_dotenv()
+JWT_KEY = os.getenv("JWT_PAYLOAD_KEY")
 
 
 def auth_middleware(x_auth_token=Header()):
@@ -9,7 +14,7 @@ def auth_middleware(x_auth_token=Header()):
             raise HTTPException(401, "No Auth token, access denied!")
 
         # decode the auth token
-        verified_token = jwt.decode(x_auth_token, "password_key", algorithms=["HS256"])
+        verified_token = jwt.decode(x_auth_token, JWT_KEY, algorithms=["HS256"])
 
         if not verified_token:
             raise HTTPException(401, "Token verification failed, authorization denied!")

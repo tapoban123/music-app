@@ -1,7 +1,9 @@
+import 'package:client/core/providers/current_user_notifier.dart';
 import 'package:client/core/theme/theme.dart';
 import 'package:client/features/auth/view/pages/login_page.dart';
-import 'package:client/features/auth/view/pages/sign_up_page.dart';
 import 'package:client/features/auth/view_model/auth_view_model.dart';
+import 'package:client/features/home/view/pages/home_page.dart';
+import 'package:client/features/home/view/pages/upload_song_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,9 +15,7 @@ void main() async {
 
   final notifier = container.read(authViewModelProvider.notifier);
   await notifier.initSharedPreferences();
-  final userModel = await notifier.getData();
-
-  print(userModel);
+  await notifier.getData();
 
   runApp(
     UncontrolledProviderScope(
@@ -25,16 +25,18 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.watch(currentUserNotifierProvider);
+
     return MaterialApp(
       title: 'Music App',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkThemeMode,
-      home: const LoginPage(),
+      home: currentUser == null ? const LoginPage() : const UploadSongPage(),
     );
   }
 }

@@ -1,14 +1,13 @@
 import 'package:client/core/constants/loader.dart';
 import 'package:client/core/theme/app_pallete.dart';
 import 'package:client/core/utils.dart';
-import 'package:client/features/auth/repository/auth_remote_repository.dart';
 import 'package:client/features/auth/view/pages/login_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
-import 'package:client/features/auth/view/widgets/custom_text_field.dart';
+import 'package:client/core/constants/custom_text_field.dart';
 import 'package:client/features/auth/view_model/auth_view_model.dart';
+import 'package:client/features/home/view/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
@@ -28,9 +27,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    formKey.currentState!.validate();
 
     super.dispose();
-    formKey.currentState!.validate();
   }
 
   @override
@@ -45,6 +44,13 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
             showSnackBar(
               context,
               "Account created successfully",
+            );
+
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+              (route) => false,
             );
           },
           error: (error, stackTrace) {

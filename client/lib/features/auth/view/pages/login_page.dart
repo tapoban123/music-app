@@ -1,14 +1,13 @@
 import 'package:client/core/constants/loader.dart';
 import 'package:client/core/theme/app_pallete.dart';
 import 'package:client/core/utils.dart';
-import 'package:client/features/auth/repository/auth_remote_repository.dart';
 import 'package:client/features/auth/view/pages/sign_up_page.dart';
 import 'package:client/features/auth/view/widgets/auth_gradient_button.dart';
-import 'package:client/features/auth/view/widgets/custom_text_field.dart';
+import 'package:client/core/constants/custom_text_field.dart';
 import 'package:client/features/auth/view_model/auth_view_model.dart';
+import 'package:client/features/home/view/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -26,9 +25,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-
-    super.dispose();
     formKey.currentState!.validate();
+    
+    super.dispose();
   }
 
   @override
@@ -43,6 +42,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             showSnackBar(
               context,
               "Logged in Successfully",
+            );
+
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const HomePage(),
+              ),
+              (route) => false,
             );
           },
           error: (error, stackTrace) {

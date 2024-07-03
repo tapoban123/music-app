@@ -1,8 +1,10 @@
+import os
 import uuid
 import bcrypt
 from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 import jwt
+from dotenv import load_dotenv
 
 from middleware.auth_middleware import auth_middleware
 from models.user import User
@@ -11,7 +13,8 @@ from database import get_db
 from pydantic_schemas.user_login import UserLogin
 
 router = APIRouter()
-
+load_dotenv()
+JWT_KEY = os.getenv("JWT_PAYLOAD_KEY")
 
 @router.post("/signup", status_code=201)
 def sign_up_user(user: UserCreate, db: Session = Depends(get_db)):
@@ -63,7 +66,7 @@ def login_user(user: UserLogin, db: Session = Depends(get_db)):
             detail="Incorrect Password!",
         )
 
-    token = jwt.encode({"id": user_db.id}, "password_key")
+    token = jwt.encode({"id": user_db.id}, JWT_KEY)
 
     return {"token": token, "user": user_db}
 

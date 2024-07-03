@@ -15,13 +15,17 @@ class AuthLocalRepository {
     _sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  void setToken(String? token) {
+  void setToken(String? token)async {
     if (token != null) {
-      _sharedPreferences.setString("x-auth-token", token);
+      await _sharedPreferences.setString("x-auth-token", token);
     }
   }
 
   String? getToken() {
     return _sharedPreferences.getString("x-auth-token");
+  }
+
+  void deletetoken() async {
+    await _sharedPreferences.remove("x-auth-token");
   }
 }
