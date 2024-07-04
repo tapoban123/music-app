@@ -1,7 +1,7 @@
 import os
 import uuid
 import bcrypt
-from fastapi import APIRouter, Depends, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 import jwt
 from dotenv import load_dotenv

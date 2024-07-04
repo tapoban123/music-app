@@ -27,7 +27,6 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
-    formKey.currentState!.validate();
 
     super.dispose();
   }
