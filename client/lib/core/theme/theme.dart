@@ -11,11 +11,13 @@ class AppTheme {
       );
 
   static final darkThemeMode = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Pallete.backgroundColor,
-    inputDecorationTheme: InputDecorationTheme(
-      focusedBorder: _border(Pallete.gradient2),
-      enabledBorder: _border(Pallete.borderColor),
-      contentPadding: const EdgeInsets.all(27),
-    ),
-  );
+      scaffoldBackgroundColor: Pallete.backgroundColor,
+      inputDecorationTheme: InputDecorationTheme(
+        focusedBorder: _border(Pallete.gradient2),
+        enabledBorder: _border(Pallete.borderColor),
+        contentPadding: const EdgeInsets.all(27),
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: Pallete.backgroundColor,
+      ));
 }
