@@ -4,6 +4,7 @@ import 'package:client/core/utils.dart';
 import 'package:client/features/home/view/widgets/music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MusicSlab extends ConsumerWidget {
@@ -19,18 +20,34 @@ class MusicSlab extends ConsumerWidget {
     }
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const MusicPlayer(),
+        Navigator.of(context).push(PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) {
+            return const MusicPlayer();
+          },
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            final tween =
+                Tween(begin: const Offset(0, 1), end: Offset.zero).chain(
+              CurveTween(curve: Curves.easeIn),
+            );
+
+            final offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(
+              position: offsetAnimation,
+              child: child,
+            );
+          },
         ));
       },
       child: Stack(
         children: [
-          Container(
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
             height: 66,
             width: MediaQuery.of(context).size.width - 16,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              // color: hexToColor(currentSong.hex_code),
+              color: hexToColor(currentSong.hex_code),
             ),
             padding: const EdgeInsets.all(9),
             child: Row(
@@ -38,13 +55,16 @@ class MusicSlab extends ConsumerWidget {
               children: [
                 Row(
                   children: [
-                    Container(
-                      width: 48,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        image: DecorationImage(
-                          image: NetworkImage(currentSong.thumbnail_url),
-                          fit: BoxFit.cover,
+                    Hero(
+                      tag: "music-image",
+                      child: Container(
+                        width: 48,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          image: DecorationImage(
+                            image: NetworkImage(currentSong.thumbnail_url),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
@@ -78,7 +98,7 @@ class MusicSlab extends ConsumerWidget {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         CupertinoIcons.heart,
                         color: Pallete.whiteColor,
                       ),

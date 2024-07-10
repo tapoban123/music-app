@@ -53,7 +53,7 @@ class SongModel {
       artist: map['artist'] ?? "",
       thumbnail_url: map['thumbnail_url'] ?? "",
       song_url: map['song_url'] ?? "",
-      hex_code: map['hexCode'] ?? "",
+      hex_code: map['hex_code'] ?? "",
     );
   }
 

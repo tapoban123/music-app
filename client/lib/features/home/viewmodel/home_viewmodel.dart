@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:client/core/providers/current_user_notifier.dart';
 import 'package:client/core/utils.dart';
 import 'package:client/features/home/models/song_model.dart';
+import 'package:client/features/home/repository/home_local_repository.dart';
 import 'package:client/features/home/repository/home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:fpdart/fpdart.dart';
@@ -26,10 +27,12 @@ Future<List<SongModel>> getAllSongs(GetAllSongsRef ref) async {
 @riverpod
 class HomeViewModel extends _$HomeViewModel {
   late HomeRepository _homeRepository;
+  late HomeLocalRepository _homeLocalRepository;
 
   @override
   AsyncValue? build() {
     _homeRepository = ref.watch(homeRepositoryProvider);
+    _homeLocalRepository = ref.watch(homeLocalRepositoryProvider);
     return null;
   }
 
@@ -59,5 +62,9 @@ class HomeViewModel extends _$HomeViewModel {
     };
 
     debugPrint(val.toString());
+  }
+
+  List<SongModel> getRecentlyPlayedSong(){
+    return _homeLocalRepository.loadSongs();
   }
 }
