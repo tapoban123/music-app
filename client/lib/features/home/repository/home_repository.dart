@@ -91,4 +91,67 @@ class HomeRepository {
       return Left(AppFailure(message: e.toString()));
     }
   }
+
+  Future<Either<AppFailure, bool>> favouriteSong({
+    required String token,
+    required String songId,
+  }) async {
+    try {
+      final response = await http.post(
+          Uri.parse("${ServerConstants.serverURL}/song/favourite"),
+          headers: {
+            "Content-type": "application/json",
+            "x-auth-token": token,
+          },
+          body: jsonEncode(
+            {
+              "song_id": songId,
+            },
+          ));
+
+      var responseBodyMap = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        responseBodyMap = responseBodyMap as Map<String, dynamic>;
+        return Left(AppFailure(message: responseBodyMap["detail"]));
+      }
+
+      return Right(responseBodyMap['message']);
+    } catch (e) {
+      return Left(AppFailure(message: e.toString()));
+    }
+  }
+
+ Future<Either<AppFailure, List<SongModel>>> getFavouriteSongs({
+    required String token,
+  }) async {
+    try {
+      final response = await http.get(
+        Uri.parse("${ServerConstants.serverURL}/song/list/favourites"),
+        headers: {
+          "Content-type": "application/json",
+          "x-auth-token": token,
+        },
+      );
+
+      var responseBodyMap = jsonDecode(response.body);
+
+      if (response.statusCode != 200) {
+        responseBodyMap = responseBodyMap as Map<String, dynamic>;
+        return Left(AppFailure(message: responseBodyMap["detail"]));
+      }
+
+      responseBodyMap = responseBodyMap as List;
+
+      List<SongModel> favouriteSongsList = [];
+      for (final map in responseBodyMap) {
+        final songData = SongModel.fromMap(map['song']);
+        favouriteSongsList.add(songData);
+      }
+
+      return Right(favouriteSongsList);
+    } catch (e) {
+      return Left(AppFailure(message: e.toString()));
+    }
+  }
 }

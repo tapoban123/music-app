@@ -1,8 +1,10 @@
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:client/core/providers/current_song_notifier.dart';
+import 'package:client/core/providers/current_user_notifier.dart';
 import 'package:client/core/theme/app_pallete.dart';
 import 'package:client/core/utils.dart';
 import 'package:client/features/home/models/song_model.dart';
+import 'package:client/features/home/viewmodel/home_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,9 @@ class MusicPlayer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentSong = ref.watch(currentSongNotifierProvider)!;
     final songNotifier = ref.watch(currentSongNotifierProvider.notifier);
+    final userFavourites = ref.watch(currentUserNotifierProvider.select(
+      (user) => user!.favourites,
+    ));
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -104,9 +109,19 @@ class MusicPlayer extends ConsumerWidget {
                         child: SizedBox(),
                       ),
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          CupertinoIcons.heart,
+                        onPressed: () async {
+                          await ref
+                              .read(homeViewModelProvider.notifier)
+                              .favouriteSong(songId: currentSong.id);
+                        },
+                        icon: Icon(
+                          userFavourites
+                                  .where(
+                                      (favSong) => favSong.id == currentSong.id)
+                                  .toList()
+                                  .isNotEmpty
+                              ? CupertinoIcons.heart_fill
+                              : CupertinoIcons.heart,
                           color: Pallete.whiteColor,
                         ),
                       )
@@ -150,7 +165,6 @@ class MusicPlayer extends ConsumerWidget {
                                     sliderValue = value;
                                   },
                                   onChangeEnd: (value) {
-                                    
                                     songNotifier.seek(value);
                                   },
                                 ),
