@@ -109,7 +109,8 @@ class MusicSlab extends ConsumerWidget {
                       icon: Icon(
                         userFavourites
                                 .where(
-                                  (favSong) => favSong.id == currentSong.id,
+                                  (favSong) =>
+                                      favSong.song_id == currentSong.id,
                                 )
                                 .toList()
                                 .isNotEmpty

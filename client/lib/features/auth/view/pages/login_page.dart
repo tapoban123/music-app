@@ -94,7 +94,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     CustomTextField(
                       hintText: "Password",
                       textEditingController: passwordController,
-                      isObsecureText: true,
+                      isToBeHiddenText: true,
+                      textInputAction: TextInputAction.done,
                     ),
                     const SizedBox(
                       height: 20,
@@ -119,9 +120,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const SignUpPage(),
-                        ));
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => const SignUpPage(),
+                          ),
+                          (route) => false,
+                        );
                       },
                       child: RichText(
                         text: TextSpan(

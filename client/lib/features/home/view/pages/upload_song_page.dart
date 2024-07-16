@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:client/core/constants/custom_text_field.dart';
 import 'package:client/core/constants/loader.dart';
-import 'package:client/core/providers/current_user_notifier.dart';
 import 'package:client/core/theme/app_pallete.dart';
 import 'package:client/core/utils.dart';
-import 'package:client/features/home/repository/home_repository.dart';
 import 'package:client/features/home/viewmodel/home_viewmodel.dart';
 import 'package:client/features/home/widgets/audio_wave.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -91,7 +89,7 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
         ],
       ),
       body: isLoading
-          ? Loader()
+          ? const Loader()
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -168,6 +166,7 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
                       CustomTextField(
                         hintText: "Song Name",
                         textEditingController: songNameController,
+                        textInputAction: TextInputAction.done,
                       ),
                       const SizedBox(
                         height: 20,

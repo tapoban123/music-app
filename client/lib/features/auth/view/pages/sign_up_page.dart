@@ -64,91 +64,105 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
     );
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        surfaceTintColor: Pallete.transparentColor,
+        shadowColor: Colors.transparent,
+        backgroundColor: Pallete.transparentColor,
+        elevation: 0,
+      ),
       body: isLoading
           ? const Loader()
-          : Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Sign Up.",
-                      style: TextStyle(
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold,
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.1,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    CustomTextField(
-                      hintText: "Name",
-                      textEditingController: nameController,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomTextField(
-                      hintText: "Email",
-                      textEditingController: emailController,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    CustomTextField(
-                      hintText: "Password",
-                      textEditingController: passwordController,
-                      isObsecureText: true,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    AuthGradientButton(
-                      onPressed: () async {
-                        if (formKey.currentState!.validate()) {
-                          await ref
-                              .read(authViewModelProvider.notifier)
-                              .signUpUser(
-                                name: nameController.text,
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
-                        } else {
-                          showSnackBar(context, "Missing fields");
-                        }
-                      },
-                      buttonName: "Sign Up",
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
-                        ));
-                      },
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Already have an account? ",
-                          style: Theme.of(context).textTheme.titleMedium,
-                          children: const [
-                            TextSpan(
-                              text: "Sign In",
-                              style: TextStyle(
-                                color: Pallete.gradient2,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                      const Text(
+                        "Sign Up.",
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      CustomTextField(
+                        hintText: "Name",
+                        textEditingController: nameController,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextField(
+                        hintText: "Email",
+                        textEditingController: emailController,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      CustomTextField(
+                        hintText: "Password",
+                        textEditingController: passwordController,
+                        isToBeHiddenText: true,
+                        textInputAction: TextInputAction.done,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      AuthGradientButton(
+                        onPressed: () async {
+                          if (formKey.currentState!.validate()) {
+                            await ref
+                                .read(authViewModelProvider.notifier)
+                                .signUpUser(
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                );
+                          } else {
+                            showSnackBar(context, "Missing fields");
+                          }
+                        },
+                        buttonName: "Sign Up",
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPage(),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                        child: RichText(
+                          text: TextSpan(
+                            text: "Already have an account? ",
+                            style: Theme.of(context).textTheme.titleMedium,
+                            children: const [
+                              TextSpan(
+                                text: "Sign In",
+                                style: TextStyle(
+                                  color: Pallete.gradient2,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

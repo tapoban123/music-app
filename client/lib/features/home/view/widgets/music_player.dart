@@ -3,10 +3,8 @@ import 'package:client/core/providers/current_song_notifier.dart';
 import 'package:client/core/providers/current_user_notifier.dart';
 import 'package:client/core/theme/app_pallete.dart';
 import 'package:client/core/utils.dart';
-import 'package:client/features/home/models/song_model.dart';
 import 'package:client/features/home/viewmodel/home_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -117,7 +115,7 @@ class MusicPlayer extends ConsumerWidget {
                         icon: Icon(
                           userFavourites
                                   .where(
-                                      (favSong) => favSong.id == currentSong.id)
+                                      (favSong) => favSong.song_id == currentSong.id)
                                   .toList()
                                   .isNotEmpty
                               ? CupertinoIcons.heart_fill

@@ -80,6 +80,10 @@ class AuthViewModel extends _$AuthViewModel {
     return state = AsyncValue.data(user);
   }
 
+  void logOutUser() {
+    _authLocalRepository.deletetoken();
+  }
+
   Future<UserModel?> getData() async {
     state = const AsyncValue.loading();
 
