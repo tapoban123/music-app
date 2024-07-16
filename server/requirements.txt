@@ -1,0 +1,7 @@
+fastapi
+cloudinary
+sqlalchemy
+dotenv
+bcrypt
+pydantic-core
+PyJWT

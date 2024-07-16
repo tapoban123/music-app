@@ -1,9 +1,9 @@
 import os
 import uuid
 import bcrypt
+import jwt
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session, joinedload
-import jwt
 from dotenv import load_dotenv
 
 from middleware.auth_middleware import auth_middleware
