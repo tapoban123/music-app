@@ -9,13 +9,17 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_remote_repository.g.dart';
 
+/// AutoDisposeProvider for [AuthRemoteRepository]
 @riverpod
 AuthRemoteRepository authRemoteRepository(AuthRemoteRepositoryRef ref) {
   return AuthRemoteRepository();
 }
 
+/// GET and POST data to database using API
 class AuthRemoteRepository {
-  // Either<Failure_Dtype, Success_Dtype>
+  // Format of Either: Either<Failure_Dtype, Success_Dtype>
+
+  /// POST request to API to `create new user`
   Future<Either<AppFailure, UserModel>> signUp({
     required String name,
     required String email,
@@ -55,6 +59,7 @@ class AuthRemoteRepository {
     // We are returning Right and Left because we are using Either return type
   }
 
+  /// POST request to database and `fetch login user details`
   Future<Either<AppFailure, UserModel>> login({
     required String email,
     required String password,
@@ -89,7 +94,8 @@ class AuthRemoteRepository {
     }
   }
 
-  Future<Either<AppFailure, UserModel>> getCurrentUserData({
+  /// `Fetch currentUserAuth` data from database
+  Future<Either<AppFailure, UserModel>> getCurrentUserAuthData({
     required String xAuthToken,
   }) async {
     try {

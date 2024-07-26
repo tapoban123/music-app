@@ -114,8 +114,8 @@ class MusicPlayer extends ConsumerWidget {
                         },
                         icon: Icon(
                           userFavourites
-                                  .where(
-                                      (favSong) => favSong.song_id == currentSong.id)
+                                  .where((favSong) =>
+                                      favSong.song_id == currentSong.id)
                                   .toList()
                                   .isNotEmpty
                               ? CupertinoIcons.heart_fill

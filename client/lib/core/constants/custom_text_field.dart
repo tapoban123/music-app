@@ -1,19 +1,25 @@
+import 'package:client/features/auth/view/pages/login_page.dart';
+import 'package:client/features/auth/view/pages/sign_up_page.dart';
+import 'package:client/features/home/view/pages/upload_song_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// StateProvider assisting the implementation of `Show or Hide Password` feature in [CustomTextField]
 AutoDisposeStateProvider showOrHidePasswordProvider = AutoDisposeStateProvider(
   (ref) {
     return true;
   },
 );
 
+/// StateProvider assisting the implemention of `Show or Hide Eye icon` on [CustomTextField]
 AutoDisposeStateProvider showEyeIconProvider = AutoDisposeStateProvider(
   (ref) {
     return false;
   },
 );
 
+/// Custom TextField implemented on [LoginPage], [SignUpPage], [UploadSongPage]
 class CustomTextField extends ConsumerWidget {
   final String hintText;
   final TextEditingController? textEditingController;
@@ -67,8 +73,8 @@ class CustomTextField extends ConsumerWidget {
             : null,
       ),
       onTap: onTap,
-      onChanged: (value) {
-        if (value.isNotEmpty && isToBeHiddenText == true) {
+      onChanged: (textFieldText) {
+        if (textFieldText.isNotEmpty && isToBeHiddenText == true) {
           ref.read(showEyeIconProvider.notifier).update(
             (state) {
               state = true;

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AuthGradientButton extends StatelessWidget {
   final String buttonName;
   final VoidCallback onPressed;
-  
+
   const AuthGradientButton({
     super.key,
     required this.buttonName,
@@ -32,7 +32,7 @@ class AuthGradientButton extends StatelessWidget {
           shadowColor: Pallete.transparentColor,
           fixedSize: const Size(395, 55),
         ),
-        child:  Text(
+        child: Text(
           buttonName,
           style: const TextStyle(
             fontSize: 17,

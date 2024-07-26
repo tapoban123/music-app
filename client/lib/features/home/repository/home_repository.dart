@@ -122,7 +122,7 @@ class HomeRepository {
     }
   }
 
- Future<Either<AppFailure, List<SongModel>>> getFavouriteSongs({
+  Future<Either<AppFailure, List<SongModel>>> getFavouriteSongs({
     required String token,
   }) async {
     try {

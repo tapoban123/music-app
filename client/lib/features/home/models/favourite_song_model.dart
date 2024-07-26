@@ -41,19 +41,20 @@ class FavouriteSongModel {
 
   String toJson() => json.encode(toMap());
 
-  factory FavouriteSongModel.fromJson(String source) => FavouriteSongModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory FavouriteSongModel.fromJson(String source) =>
+      FavouriteSongModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'FavouriteSongModel(id: $id, song_id: $song_id, user_id: $user_id)';
+  String toString() =>
+      'FavouriteSongModel(id: $id, song_id: $song_id, user_id: $user_id)';
 
   @override
   bool operator ==(covariant FavouriteSongModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.song_id == song_id &&
-      other.user_id == user_id;
+
+    return other.id == id &&
+        other.song_id == song_id &&
+        other.user_id == user_id;
   }
 
   @override

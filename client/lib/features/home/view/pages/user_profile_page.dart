@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserProfilePage extends ConsumerWidget {
+/// Implements `UserProfile UI` Screen
   const UserProfilePage({super.key});
 
   void logoutUserFunction(WidgetRef ref, BuildContext context) {

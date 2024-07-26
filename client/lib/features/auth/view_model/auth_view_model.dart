@@ -8,6 +8,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'auth_view_model.g.dart';
 
+/// `ViewModel for Authentication`
+/// 
+/// Fetches data from [AuthRemoteRepository]
 @riverpod
 class AuthViewModel extends _$AuthViewModel {
   late AuthRemoteRepository _authRemoteRepository;
@@ -23,10 +26,14 @@ class AuthViewModel extends _$AuthViewModel {
     return null;
   }
 
+  /// Initialising [SharedPreferences] from [AuthLocalRepository]
   Future<void> initSharedPreferences() async {
     await _authLocalRepository.init();
   }
 
+  /// `Creating new user` in the database
+  ///
+  /// Calling API from [AuthRemoteRepository]
   Future<void> signUpUser({
     required String name,
     required String email,
@@ -51,6 +58,9 @@ class AuthViewModel extends _$AuthViewModel {
     debugPrint(val.toString());
   }
 
+  /// `Logging in user` in the database
+  ///
+  /// Calling API from [AuthRemoteRepository]
   Future<void> loginUser({
     required String email,
     required String password,
@@ -73,6 +83,9 @@ class AuthViewModel extends _$AuthViewModel {
     debugPrint(val.toString());
   }
 
+  /// Creating token and saving in local storage using [AuthLocalRepository.setToken] for maintaining AuthStateChanges
+  ///
+  /// Also notifying [CurrentUserNotifier] to change app state from `logged out` to `logged in`
   AsyncValue<UserModel>? _loginSuccess(UserModel user) {
     _authLocalRepository.setToken(user.token);
     _currentUserNotifier.addUser(user);
@@ -80,18 +93,22 @@ class AuthViewModel extends _$AuthViewModel {
     return state = AsyncValue.data(user);
   }
 
+  /// `Logging out user` by deleting auth_token from local storage using [AuthLocalRepository.deleteToken]
   void logOutUser() {
-    _authLocalRepository.deletetoken();
+    _authLocalRepository.deleteToken();
   }
 
-  Future<UserModel?> getData() async {
+  /// `Fetches current user data` from database 
+  /// 
+  /// API called from [AuthRemoteRepository.getCurrentUserAuthData]
+  Future<UserModel?> getAuthData() async {
     state = const AsyncValue.loading();
 
     final token = _authLocalRepository.getToken();
 
     if (token != null) {
       final result =
-          await _authRemoteRepository.getCurrentUserData(xAuthToken: token);
+          await _authRemoteRepository.getCurrentUserAuthData(xAuthToken: token);
 
       final val = switch (result) {
         Left(value: final l) => state = AsyncValue.error(
@@ -107,6 +124,7 @@ class AuthViewModel extends _$AuthViewModel {
     return null;
   }
 
+  /// If AuthData fetched successfully: [CurrentUserNotifier] is updated with user data
   AsyncValue<UserModel> _getDataSuccess(UserModel user) {
     _currentUserNotifier.addUser(user);
     return state = AsyncValue.data(user);

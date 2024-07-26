@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
+  /// Implements the `Login Screen UI`
   const LoginPage({super.key});
 
   @override

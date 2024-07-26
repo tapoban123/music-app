@@ -14,7 +14,8 @@ part 'home_viewmodel.g.dart';
 
 @riverpod
 Future<List<SongModel>> getAllSongs(GetAllSongsRef ref) async {
-  final token = ref.watch(currentUserNotifierProvider.select((user) => user!.token));
+  final token =
+      ref.watch(currentUserNotifierProvider.select((user) => user!.token));
   final response = await ref.watch(homeRepositoryProvider).getAllSongs(
         token: token,
       );
@@ -27,7 +28,8 @@ Future<List<SongModel>> getAllSongs(GetAllSongsRef ref) async {
 
 @riverpod
 Future<List<SongModel>> getFavouriteSongs(GetFavouriteSongsRef ref) async {
-  final token = ref.watch(currentUserNotifierProvider.select((user) => user!.token));
+  final token =
+      ref.watch(currentUserNotifierProvider.select((user) => user!.token));
   final response = await ref.watch(homeRepositoryProvider).getFavouriteSongs(
         token: token,
       );

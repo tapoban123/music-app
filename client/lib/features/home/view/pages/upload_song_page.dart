@@ -11,6 +11,7 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Implements `UI of UploadSongPage`
 class UploadSongPage extends ConsumerStatefulWidget {
   const UploadSongPage({super.key});
 
@@ -34,6 +35,7 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
     super.dispose();
   }
 
+  /// `Select Audio file` from device using [pickAudio] method
   Future<void> selectAudio() async {
     final pickedAudio = await pickAudio();
 
@@ -44,6 +46,7 @@ class _UploadSongPageState extends ConsumerState<UploadSongPage> {
     }
   }
 
+  /// `Select Image file` from device using [pickImage] method
   Future<void> selectImage() async {
     final pickedImage = await pickImage();
 

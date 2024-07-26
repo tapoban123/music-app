@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SignUpPage extends ConsumerStatefulWidget {
+  /// Implements `SignUp Page UI` Screen [SignUpPage]
   const SignUpPage({super.key});
 
   @override
