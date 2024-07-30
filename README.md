@@ -11,6 +11,6 @@ The back-end allows us to interact with the PostgreSQL database from the applica
 
 The DBMS used in this project is [PostgreSQL](https://www.postgresql.org/) and [Cloudinary](https://cloudinary.com/) (for storing the media files)
 
-![Auth Screens](display_images\auth.png)
-![Home Screens](display_images\home.png)
-![Features Screen](display_images\features.png)
+![Auth Screens](https://github.com/tapoban123/music-app/blob/main/display_images/auth.png)
+![Home Screens](https://github.com/tapoban123/music-app/blob/main/display_images/features.png)
+![Features Screen](https://github.com/tapoban123/music-app/blob/main/display_images/home.png)
