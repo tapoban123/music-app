@@ -1,7 +1,6 @@
 fastapi
 cloudinary
-sqlalchemy
-dotenv
+SQLAlchemy
 bcrypt
-pydantic-core
 PyJWT
+psycopg2
